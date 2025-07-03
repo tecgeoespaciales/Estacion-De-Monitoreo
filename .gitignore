@@ -1,0 +1,67 @@
+# Archivos de entorno y configuración sensible (excepto los que están encriptados)
+# .env - Se permite porque se encripta con git-crypt
+# *.env - Se permite porque se encripta con git-crypt
+.env.local
+.env.development
+.env.production
+
+# Certificados y claves privadas
+*.key
+*.crt
+*.pem
+*.srl
+*.csr
+ca.key
+client.key
+server.key
+private_key.pem
+client-key.pem
+server-key.pem
+
+# Datos de bases de datos
+Docker/mysql/data/
+*.ibd
+*.sock
+*.dblwr
+auto.cnf
+binlog.*
+ib_buffer_pool
+ibdata1
+ibtmp1
+undo_*
+mysql_upgrade_history
+
+# Logs
+Docker/mosquitto/log/
+*.log
+logs/
+
+# Archivos temporales de Docker
+.dockerignore
+
+# Node.js y Node-RED
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+Docker/nodered/data/node_modules/
+Docker/nodered/data/flows_cred.json
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+*.bak
+
+# Mosquitto passwords (archivo sensible)
+Docker/mosquitto/passwd/mosquitto.passwd
+
+# IDE y editores
+.vscode/
+.idea/
+*.sublime-*
+
+# Archivos de respaldo
+*.backup
+*.old

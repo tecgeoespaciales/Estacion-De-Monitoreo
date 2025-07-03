@@ -1,0 +1,20 @@
+# Encriptar archivos sensibles con git-crypt
+.env filter=git-crypt diff=git-crypt
+*.env filter=git-crypt diff=git-crypt
+Docker/.env filter=git-crypt diff=git-crypt
+
+# Encriptar archivos de certificados y claves
+*.key filter=git-crypt diff=git-crypt
+*.pem filter=git-crypt diff=git-crypt
+ca.key filter=git-crypt diff=git-crypt
+client.key filter=git-crypt diff=git-crypt
+server.key filter=git-crypt diff=git-crypt
+private_key.pem filter=git-crypt diff=git-crypt
+client-key.pem filter=git-crypt diff=git-crypt
+server-key.pem filter=git-crypt diff=git-crypt
+
+# Encriptar archivos de contraseñas
+Docker/mosquitto/passwd/mosquitto.passwd filter=git-crypt diff=git-crypt
+
+# Encriptar credenciales de Node-RED
+Docker/nodered/data/flows_cred.json filter=git-crypt diff=git-crypt

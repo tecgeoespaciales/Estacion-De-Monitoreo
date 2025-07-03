@@ -1,0 +1,57 @@
+version: '3.3'
+
+services:
+  mosquitto:
+    build:
+      context: .
+      dockerfile: DockerfileMosquitto.dockerfile
+    ports:
+      - "${MOSQUITTO_PORT_MQTT:-1883}:1883"
+      #- "${MOSQUITTO_PORT_MQTTS:-8883}:8883"
+      # - "${MOSQUITTO_PORT_WS:-9001}:9001"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+      - ./mosquitto/passwd:/mosquitto/passwd
+      - ./mosquitto/certs:/mosquitto/certs
+    environment:
+      - MQTT_ALLOW_ANONYMOUS=${MQTT_ALLOW_ANONYMOUS}
+      - MQTT_PASSWORD_FILE=${MQTT_PASSWORD_FILE}
+
+  nodered:
+    build:
+      context: .
+      dockerfile: DockerfileNodeRed.dockerfile
+    ports:
+      - "${NODERED_PORT:-1880}:1880"
+    volumes:
+      - ./nodered/data:/data
+      - ./nodered/settings.js:/data/settings.js
+      - ./nodered/certs:/data/certs
+      # - ./nodered/flows.json:/data/flows.json
+    depends_on:
+      - mosquitto
+      - mysql
+    environment:
+      - NODE_RED_ENABLE_SAFE_MODE=${NODE_RED_ENABLE_SAFE_MODE}
+      - NODE_RED_ENABLE_PROJECTS=${NODE_RED_ENABLE_PROJECTS}
+      - NODE_RED_ENABLE_ADMIN_API=${NODE_RED_ENABLE_ADMIN_API}
+      - NODE_RED_ENABLE_EDITOR=${NODE_RED_ENABLE_EDITOR}
+      - NODE_RED_MQTT_BROKER_URL=${NODE_RED_MQTT_BROKER_URL}
+      - NODE_RED_MQTT_BROKER_SSL_URL=${NODE_RED_MQTT_BROKER_SSL_URL}
+      - NODE_RED_MQTT_BROKER_USERNAME=${NODE_RED_MQTT_BROKER_USERNAME}
+      - NODE_RED_MQTT_BROKER_PASSWORD=${NODE_RED_MQTT_BROKER_PASSWORD}
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - ./mysql/data:/var/lib/mysql

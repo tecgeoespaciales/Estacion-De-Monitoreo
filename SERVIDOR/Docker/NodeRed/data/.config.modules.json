@@ -1,0 +1,9 @@
+{
+    "mssql": {
+        "spec": "mssql",
+        "module": "mssql",
+        "subpath": "",
+        "builtin": false,
+        "known": false
+    }
+}
