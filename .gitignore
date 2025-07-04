@@ -1,6 +1,7 @@
 # Archivos de entorno y configuración sensible (excepto los que están encriptados)
 # .env - Se permite porque se encripta con git-crypt
 # *.env - Se permite porque se encripta con git-crypt
+.env
 .env.local
 .env.development
 .env.production
